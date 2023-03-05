@@ -1,0 +1,3 @@
+SigninLogs
+| where AppDisplayName in~ ("Azure Active Directory PowerShell","Microsoft Graph PowerShell","Microsoft Azure PowerShell") or UserAgent contains "WindowsPowerShell"
+| project TimeGenerated, AppDisplayName, UserPrincipalName, IPAddress, UserAgent
