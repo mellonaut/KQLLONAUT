@@ -35,6 +35,12 @@ $deviceBadUrl2 = 'DeviceNetworkEvents
 $deviceBadUrl2 = Invoke-AzOperationalInsightsQuery -WorkspaceId $WorkspaceID -Query $deviceBadUrl2 
 $deviceBadUrl2.Results
 
+# Base64 encode command run
+"DeviceProcessEvents 
+| where Timestamp > ago(14d) 
+| where ProcessCommandLine contains ".decode('base64')" or ProcessCommandLine contains "base64 --decode" or ProcessCommandLine contains ".decode64(" 
+| project Timestamp , DeviceName , FileName , FolderPath , ProcessCommandLine , InitiatingProcessCommandLine  
+| top 100 by Timestamp" 
 
 # Devices with most SMB Sessions
 $mdeQuery =  'let TimeFrame = 30d; 
